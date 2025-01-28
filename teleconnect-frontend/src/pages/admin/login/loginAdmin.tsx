@@ -1,15 +1,15 @@
 import styled from 'styled-components';
-import { LoginForm } from './components/loginform';
+import { LoginFormAdmin } from './components/loginFormAdmin';
 import { LoginImage } from './components/loginimage';
 
-export const Login = () => {
+export const LoginAdmin = () => {
     return (
         <LoginContainer>
             <LogoWrapper>
                 <Logo src="/logo.png" alt="Logo Teleconnect" />
             </LogoWrapper>
             <FormWrapper>
-                <LoginForm />
+                < LoginFormAdmin/>
             </FormWrapper>
             <ImageWrapper>
                 <LoginImage />
@@ -37,14 +37,13 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled.img`
-    width: 200px; /* Aumenta o tamanho da logo */
+    width: 200px; /* Ajusta o tamanho da logo */
     height: auto;
 
     @media (max-width: 768px) {
         width: 150px; /* Ajusta o tamanho em telas menores */
     }
 `;
-
 
 const FormWrapper = styled.div`
     flex: 1; /* O formulário ocupa 50% */
