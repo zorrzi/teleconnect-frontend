@@ -1,44 +1,136 @@
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
+import { registerUser } from "../api/register";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const SignupForm = () => {
+    const [formData, setFormData] = useState({
+        cpf: "",
+        phone: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        name: "",
+    });
+
+    const navigate = useNavigate();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (formData.password !== formData.confirmPassword) {
+            toast.error("As senhas não coincidem.");
+            return;
+        }
+
+        try {
+            await registerUser(formData);
+            toast.success("Cadastro realizado com sucesso!");
+            navigate("/user/login");
+        } catch (error) {
+            toast.error("Erro ao registrar usuário. Tente novamente.");
+        }
+    };
+
     return (
         <SignupStyles>
-            <Title>Conectando possibilidades e transformando futuros</Title>
-            <Subtitle>Seja bem-vindo! Preencha os dados para criar a sua conta.</Subtitle>
-            <Form>
+            <Title>Crie sua conta</Title>
+            <Subtitle>Preencha os dados abaixo para se cadastrar.</Subtitle>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Icon src="/user.png" alt="Ícone CPF" />
-                    <Input type="text" id="cpf" placeholder="CPF" required />
-                    <Label htmlFor="cpf">CPF</Label>
+                    <Icon src="/user.png" alt="Ícone Nome" />
+                    <Input 
+                        type="text" 
+                        name="name" 
+                        placeholder="Digite seu nome" 
+                        value={formData.name} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Nome</Label>
                 </FormGroup>
                 <FormGroup>
-                    <Icon src="/email.png" alt="Ícone Email" />
-                    <Input type="email" id="email" placeholder="Email" required />
-                    <Label htmlFor="email">Email</Label>
+                    <Icon src="/cpf.png" alt="Ícone CPF" />
+                    <Input 
+                        type="text" 
+                        name="cpf" 
+                        placeholder="Digite seu CPF" 
+                        value={formData.cpf} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>CPF</Label>
                 </FormGroup>
                 <FormGroup>
                     <Icon src="/phone.png" alt="Ícone Telefone" />
-                    <Input type="tel" id="telefone" placeholder="Telefone" required />
-                    <Label htmlFor="telefone">Telefone</Label>
+                    <Input 
+                        type="text" 
+                        name="phone" 
+                        placeholder="Digite seu telefone" 
+                        value={formData.phone} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Telefone</Label>
+                </FormGroup>
+                <FormGroup>
+                    <Icon src="/email.png" alt="Ícone Email" />
+                    <Input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Digite seu email" 
+                        value={formData.email} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Email</Label>
                 </FormGroup>
                 <FormGroup>
                     <Icon src="/padlock.png" alt="Ícone Senha" />
-                    <Input type="password" id="password" placeholder="Senha" required />
-                    <Label htmlFor="password">Senha</Label>
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Digite sua senha" 
+                        value={formData.password} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Senha</Label>
                 </FormGroup>
                 <FormGroup>
-                    <Icon src="/padlock.png" alt="Ícone Confirmar Senha" />
-                    <Input type="password" id="confirmar-senha" placeholder="Confirmar Senha" required />
-                    <Label htmlFor="confirmar-senha">Confirmar Senha</Label>
+                    <Icon src="/padlock.png" alt="Ícone Confirmação de Senha" />
+                    <Input 
+                        type="password" 
+                        name="confirmPassword" 
+                        placeholder="Confirme sua senha" 
+                        value={formData.confirmPassword} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Confirme sua senha</Label>
                 </FormGroup>
-                <Button type="submit">Cadastre-se</Button>
+                <BaixoForm2>
+                <Button type="submit">Cadastrar</Button>
+                <LoginText>
+                    Já tem uma conta? <a href="/user/login">Faça login</a>
+                </LoginText>
+                </BaixoForm2>
             </Form>
-            <RegisterText>
-                Já tem uma conta? <a href="/user/login">Faça Login!</a>
-            </RegisterText>
         </SignupStyles>
     );
 };
+
+const BaixoForm2 = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+`;
 
 const SignupStyles = styled.div`
     display: flex;
@@ -59,7 +151,7 @@ const Title = styled.h1`
 const Subtitle = styled.p`
     font-size: 1rem;
     color: #666666;
-    margin-bottom: 20px;
+    margin-bottom: 1rem;
     text-align: left;
 `;
 
@@ -72,7 +164,7 @@ const FormGroup = styled.div`
     position: relative;
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 1.5rem;
 `;
 
 const Icon = styled.img`
@@ -118,13 +210,13 @@ const Input = styled.input`
     }
 
     &::placeholder {
-        color: transparent;
+        color: transparent; /* Placeholder escondido para usar apenas o label */
     }
 `;
 
 const Button = styled.button`
     width: 100%;
-    max-width: 200px;
+    max-width: 200px; /* Ajusta o tamanho máximo do botão */
     padding: 12px 0;
     background-color: #3CBBB4;
     color: white;
@@ -140,12 +232,10 @@ const Button = styled.button`
     }
 `;
 
-const RegisterText = styled.p`
+const LoginText = styled.p`
     font-size: 0.9rem;
-    color: #666666;
-    margin-top: 20px;
     text-align: center;
-
+    
     a {
         color: #3CBBB4;
         font-weight: 700;

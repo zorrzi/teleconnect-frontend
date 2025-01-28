@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { LoginForm } from './components/loginFormUser';
-import { LoginImage } from './components/loginimage';
+import styled from "styled-components";
+import { LoginForm } from "./components/loginFormUser";
+import { LoginImage } from "./components/loginimage";
 
 export const Login = () => {
     return (
@@ -20,12 +20,12 @@ export const Login = () => {
 
 const LoginContainer = styled.div`
     position: relative;
-    height: 100vh; /* Ocupa toda a altura da tela */
+    height: 100vh;
     display: flex;
     background-color: #f9f9f9;
 
     @media (max-width: 768px) {
-        flex-direction: column; /* Empilha os elementos em telas menores */
+        flex-direction: column;
     }
 `;
 
@@ -33,21 +33,20 @@ const LogoWrapper = styled.div`
     position: absolute;
     top: 20px;
     left: 20px;
-    z-index: 10; /* Garante que a logo fique acima de outros elementos */
+    z-index: 10;
 `;
 
 const Logo = styled.img`
-    width: 200px; /* Aumenta o tamanho da logo */
+    width: 200px;
     height: auto;
 
     @media (max-width: 768px) {
-        width: 150px; /* Ajusta o tamanho em telas menores */
+        width: 150px;
     }
 `;
 
-
 const FormWrapper = styled.div`
-    flex: 1; /* O formulário ocupa 50% */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -56,7 +55,7 @@ const FormWrapper = styled.div`
 `;
 
 const ImageWrapper = styled.div`
-    flex: 1; /* A imagem ocupa 50% */
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;

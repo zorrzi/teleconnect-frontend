@@ -1,29 +1,80 @@
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
+import { loginUser } from "../api/login";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 export const LoginForm = () => {
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!formData.email || !formData.password) {
+            toast.error("Preencha todos os campos!");
+            return;
+        }
+
+        try {
+            await loginUser(formData.email, formData.password);
+            toast.success("Login realizado com sucesso!");
+            navigate("/user/dashboard");
+        } catch (error) {
+            toast.error("Erro ao fazer login. Verifique suas credenciais.");
+        }
+    };
+
     return (
         <LoginStyles>
-            <Title>Conectando possibilidades e transformando futuros</Title>
-            <Subtitle>Bem-vindo de volta! Faça login na sua conta.</Subtitle>
-            <Form>
+            <Title>Bem-vindo de volta!</Title>
+            <Subtitle>Faça login na sua conta.</Subtitle>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Icon src="/user.png" alt="Ícone CPF" />
-                    <Input type="text" id="cpf" placeholder="Digite seu CPF" required />
-                    <Label htmlFor="cpf">CPF</Label>
+                    <Icon src="/user.png" alt="Ícone Email" />
+                    <Input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Digite seu Email" 
+                        value={formData.email} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Email</Label>
                 </FormGroup>
                 <FormGroup>
                     <Icon src="/padlock.png" alt="Ícone Senha" />
-                    <Input type="password" id="password" placeholder="Digite sua senha" required />
-                    <Label htmlFor="password">Senha</Label>
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Digite sua senha" 
+                        value={formData.password} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Senha</Label>
                 </FormGroup>
+                <BaixoForm>
                 <Button type="submit">Login</Button>
+                <SignupText>
+                    Ainda não tem uma conta? <a href="/user/signup">Cadastre-se aqui</a>
+                </SignupText>
+                </BaixoForm>
             </Form>
-            <RegisterText>
-                Não tem uma conta? <a href="/user/signup">Faça seu cadastro!</a>
-            </RegisterText>
         </LoginStyles>
     );
 };
+
+const BaixoForm = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+`;
 
 const LoginStyles = styled.div`
     display: flex;
@@ -125,11 +176,9 @@ const Button = styled.button`
     }
 `;
 
-const RegisterText = styled.p`
+const SignupText = styled.p`
     font-size: 0.9rem;
-    color: #666666;
-    margin-top: 30px;
-    text-align: center; /* Centraliza o texto */
+    text-align: center;
     
     a {
         color: #3CBBB4;
