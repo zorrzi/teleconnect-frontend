@@ -1,20 +1,62 @@
-import styled from 'styled-components';
+import { useState } from "react";
+import styled from "styled-components";
+import { loginDirector } from "../api/login";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
-export const LoginFormAdmin = () => {
+export const LoginFormDirector = () => {
+    const [formData, setFormData] = useState({ email: "", password: "" });
+    const navigate = useNavigate();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        if (!formData.email || !formData.password) {
+            toast.error("Preencha todos os campos!");
+            return;
+        }
+
+        try {
+            await loginDirector(formData.email, formData.password);
+            toast.success("Login realizado com sucesso!");
+            navigate("/director/dashboard");
+        } catch (error) {
+            toast.error("Erro ao fazer login. Verifique suas credenciais.");
+        }
+    };
+
     return (
         <LoginStyles>
-            <Title>Área restrita</Title>
-            <Subtitle>Faça login com a sua conta de funcionário.</Subtitle>
-            <Form>
+            <Title>Bem-vindo, Diretor!</Title>
+            <Subtitle>Faça login para acessar sua conta.</Subtitle>
+            <Form onSubmit={handleSubmit}>
                 <FormGroup>
-                    <Icon src="/email.png" alt="Ícone Email" />
-                    <Input type="email" id="email" placeholder="Digite seu email" required />
-                    <Label htmlFor="email">Email</Label>
+                    <Icon src="/user.png" alt="Ícone Email" />
+                    <Input 
+                        type="email" 
+                        name="email" 
+                        placeholder="Digite seu Email" 
+                        value={formData.email} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Email</Label>
                 </FormGroup>
                 <FormGroup>
                     <Icon src="/padlock.png" alt="Ícone Senha" />
-                    <Input type="password" id="password" placeholder="Digite sua senha" required />
-                    <Label htmlFor="password">Senha</Label>
+                    <Input 
+                        type="password" 
+                        name="password" 
+                        placeholder="Digite sua senha" 
+                        value={formData.password} 
+                        onChange={handleChange} 
+                        required 
+                    />
+                    <Label>Senha</Label>
                 </FormGroup>
                 <Button type="submit">Login</Button>
             </Form>
@@ -69,7 +111,7 @@ const Icon = styled.img`
 
 const Label = styled.label`
     position: absolute;
-    left: 40px; /* Ajustado para acomodar o ícone */
+    left: 40px;
     top: 10px;
     font-size: 1rem;
     color: #aaaaaa;
@@ -86,7 +128,7 @@ const Label = styled.label`
 
 const Input = styled.input`
     width: 100%;
-    padding: 10px 0 10px 40px; /* Espaço ajustado para o ícone */
+    padding: 10px 0 10px 40px;
     border: none;
     border-bottom: 2px solid #cccccc;
     font-size: 1rem;
@@ -100,13 +142,13 @@ const Input = styled.input`
     }
 
     &::placeholder {
-        color: transparent; /* Placeholder escondido para usar apenas o label */
+        color: transparent;
     }
 `;
 
 const Button = styled.button`
     width: 100%;
-    max-width: 200px; /* Ajusta o tamanho máximo do botão */
+    max-width: 200px;
     padding: 12px 0;
     background-color: #3CBBB4;
     color: white;
@@ -115,7 +157,6 @@ const Button = styled.button`
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
 
     &:hover {
         background-color: #32A09A;
