@@ -2,8 +2,8 @@ import { redirect, RouteObject } from 'react-router-dom';
 import { Dashboard } from './dashboard/dashboard';
 import { Home } from './dashboard/nested/home/homepage';
 import { LandingPage } from './landingpage/landingpage';
-import { Login } from './login/login';
-import { Signup } from './signup/signup';
+import { Login } from './login/loginUser';
+import { Signup } from './signup/signupUser';
 
 const routes: RouteObject[] = [
     {
