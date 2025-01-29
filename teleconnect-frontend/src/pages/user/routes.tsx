@@ -7,22 +7,6 @@ import { Signup } from './signup/signupUser';
 
 const routes: RouteObject[] = [
     {
-        path: "user/dashboard",
-        element: <Dashboard />,
-        id: "dashboard",
-        children: [
-            {
-                index: true,
-                loader: async () => redirect('/user/dashboard/home')
-            },
-            {
-                path: "home",
-                element: <Home />,
-                id: "home"
-            },
-        ]
-    },
-    {
         path: "user/landingpage",
         element: <LandingPage />,
         id: "landingpage",

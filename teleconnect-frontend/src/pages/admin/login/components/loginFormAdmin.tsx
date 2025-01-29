@@ -23,7 +23,7 @@ export const LoginFormDirector = () => {
         try {
             await loginDirector(formData.email, formData.password);
             toast.success("Login realizado com sucesso!");
-            navigate("/director/dashboard");
+            navigate("/admin/dashboard");
         } catch (error) {
             toast.error("Erro ao fazer login. Verifique suas credenciais.");
         }
@@ -31,7 +31,7 @@ export const LoginFormDirector = () => {
 
     return (
         <LoginStyles>
-            <Title>Bem-vindo, Diretor!</Title>
+            <Title>Bem-vindo, Administrador!</Title>
             <Subtitle>Faça login para acessar sua conta.</Subtitle>
             <Form onSubmit={handleSubmit}>
                 <FormGroup>
@@ -83,7 +83,7 @@ const Title = styled.h1`
 const Subtitle = styled.p`
     font-size: 1rem;
     color: #666666;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     text-align: left;
 `;
 
