@@ -1,4 +1,4 @@
-import { Hero } from "./components/Carrosel";
+import { Carousel } from "./components/Carrosel";
 import { Offers } from "./components/Offers";
 import { Features } from "./components/Features";
 import { Header } from "../../components/header";
@@ -8,7 +8,7 @@ export const LandingPage = () => {
     return (
         <>
             <Header />
-            <Hero />
+            <Carousel />
             <Offers />
             <Features />
             <Footer />
