@@ -1,12 +1,11 @@
 import styled from 'styled-components';
 import toast from 'react-hot-toast';
 
-import { CreatePackageForm } from '../../components/CreatePackageForm/createPackageForm';
-
-export const Home = () => {
+import { ListPackages } from '../../components/Catalogo/listPackages';
+export const Catalog = () => {
     return (
         <HomeStyles>
-            <p>Olá, Administrador!</p>
+            <ListPackages />
         </HomeStyles>
     )
 }

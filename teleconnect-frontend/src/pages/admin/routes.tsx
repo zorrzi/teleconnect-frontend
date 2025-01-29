@@ -2,11 +2,12 @@ import { redirect, RouteObject } from 'react-router-dom';
 import { LoginAdmin } from './login/loginAdmin';
 import { Dashboard } from './dashboard/dashboard';
 import { Home } from './dashboard/nested/home/homepage';
-import { CreatePackage } from './dashboard/nested/home/createPackage';
+import { CreatePackage } from './dashboard/nested/home/createpackage';
+import { Catalog } from './dashboard/nested/home/catalog';
 
 const routes: RouteObject[] = [
     {
-            path: "admin/dashboard",
+            path: "admin/dashboard/*",
             element: <Dashboard />,
             id: "dashboard",
             children: [
@@ -20,9 +21,14 @@ const routes: RouteObject[] = [
                     id: "home"
                 },
                 {
-                    path: "create-package",
+                    path: "new-package",
                     element: <CreatePackage />,
-                    id: "create-package"
+                    id: "new-package"
+                },
+                {
+                    path: "catalog",
+                    element: <Catalog />,
+                    id: "catalog"
                 },
             ]
         },
