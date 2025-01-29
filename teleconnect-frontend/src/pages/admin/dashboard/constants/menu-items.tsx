@@ -14,6 +14,6 @@ export const menuItems = [
     {
         label: 'Catálogo',
         icon: <FileText />,
-        href: '/admin/dashboard/catalogo',
+        href: '/admin/dashboard/catalog',
     }
 ];

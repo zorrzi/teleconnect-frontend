@@ -2,6 +2,8 @@ import { Route, Routes } from 'react-router-dom';
 import { Menu } from './components/menu';
 import styled from 'styled-components';
 import { Home } from './nested/home/homepage';
+import { CreatePackage } from './nested/home/createpackage';
+import { Catalog } from './nested/home/catalog';
 
 export const Dashboard = () => {
     return (
@@ -10,6 +12,8 @@ export const Dashboard = () => {
             <MainContent>
                 <Routes>
                     <Route path="home" element={<Home />} />
+                    <Route path="new-package" element={<CreatePackage />} />
+                    <Route path="catalog" element={<Catalog />} />
                 </Routes>
             </MainContent>
         </DashboardStyles>
