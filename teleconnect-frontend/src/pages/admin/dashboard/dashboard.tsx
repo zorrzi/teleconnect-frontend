@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { Home } from './nested/home/homepage';
 import { CreatePackage } from './nested/home/createpackage';
 import { Catalog } from './nested/home/catalog';
+import { AuthProvider } from './components/ValidadeSession/ValidadeSession';
 
 export const Dashboard = () => {
     return (
+        <AuthProvider>
         <DashboardStyles>
             <Menu />
             <MainContent>
@@ -17,6 +19,7 @@ export const Dashboard = () => {
                 </Routes>
             </MainContent>
         </DashboardStyles>
+        </AuthProvider>
     );
 };
 
