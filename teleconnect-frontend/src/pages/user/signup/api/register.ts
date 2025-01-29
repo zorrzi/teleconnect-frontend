@@ -1,17 +1,25 @@
-import axios from "axios";
 import { config } from "../../../../config/config";
 
-const api = axios.create({
-  baseURL: `${config.apiBaseUrl}/auth`,
-  headers: { "Content-Type": "application/json" },
-});
-
+// Função para registrar um novo usuário
 export const registerUser = async (userData: {
-  cpf: string;
-  phone: string;
-  email: string;
-  password: string;
-  name: string;
+    cpf: string;
+    phone: string;
+    email: string;
+    password: string;
+    name: string;
 }) => {
-  return api.post("/register", userData);
+    const response = await fetch(`${config.apiBaseUrl}/auth/register`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+    });
+
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.detail || "Erro no registro");
+    }
+
+    return data;
 };

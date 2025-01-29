@@ -1,4 +1,4 @@
-import { Hero } from "./components/Hero";
+import { Hero } from "./components/Carrosel";
 import { Offers } from "./components/Offers";
 import { Features } from "./components/Features";
 import { Header } from "../../components/header";

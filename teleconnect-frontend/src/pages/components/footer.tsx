@@ -79,13 +79,21 @@ const LeftSection = styled.div`
     }
 
     img {
-        width: 400px;
+        width: 50%;
         height: auto;
     }
 
     @media (max-width: 720px) {
         width: 100%;
+        p{
+            padding-left: 0;
+        }
     }
+
+    @media (max-width: 520px) {
+        flex-wrap: wrap;
+        justify-content: center;
+        }
 `;
 
 
