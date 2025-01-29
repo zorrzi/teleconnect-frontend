@@ -1,46 +1,82 @@
 import styled from "styled-components";
+import { MapPin, RocketLaunch } from "phosphor-react";
 
 export const Features = () => {
     return (
         <FeaturesContainer>
-            <FeatureCard>
-                <Icon src="/internet.png" alt="Ícone Fibra" />
-                <Text>Internet de melhor qualidade e mais veloz</Text>
-            </FeatureCard>
-            <FeatureCard>
-                <Icon src="/mobile.png" alt="Ícone Telefone Móvel" />
-                <Text>A melhor rede móvel, implementada com o MVNO</Text>
-            </FeatureCard>
-            <FeatureCard>
-                <Icon src="/phone.png" alt="Ícone Telefone Fixo" />
-                <Text>Não tenha preocupações com a bateria do celular</Text>
-            </FeatureCard>
+            <FeatureBox>
+                <FeatureIcon>
+                    <PlusIcon>+</PlusIcon>
+                    <MapPin size={24} weight="bold" />
+                </FeatureIcon>
+                <h3>Perto de você!</h3>
+                <p>
+                    Estamos presentes em <strong>Belo Horizonte, Campinas, Juíz de Fora, Niterói, Petrópolis, Rio de Janeiro, Santos, São Paulo, Serra, Uberlândia, Vila Velha, Vitória.</strong>
+                </p>
+            </FeatureBox>
+
+            <FeatureBox>
+                <FeatureIcon>
+                    <PlusIcon>+</PlusIcon>
+                    <RocketLaunch size={24} weight="bold" />
+                </FeatureIcon>
+                <h3>Velocidade</h3>
+                <p>
+                    Experimente a máxima velocidade com nossos produtos! Roteadores **5G** de última geração garantem uma conexão estável, rápida e de longo alcance. Assista vídeos em **4K**, jogue online e conecte todos os seus dispositivos com facilidade.
+                </p>
+            </FeatureBox>
         </FeaturesContainer>
     );
 };
 
-const FeaturesContainer = styled.div`
+/* ======= Styled Components ======= */
+
+/* Container principal */
+const FeaturesContainer = styled.section`
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    padding: 50px;
+    justify-content: space-around;
+    align-items: center;
+    padding: 3rem 2rem;
+    background: url("/caracteristicas.png") no-repeat center center/cover;
+    color: white;
+    text-align: left;
+
+    @media (max-width: 900px) {
+        flex-direction: column;
+        text-align: center;
+    }
 `;
 
-const FeatureCard = styled.div`
-    background: white;
+/* Box de cada característica */
+const FeatureBox = styled.div`
+    max-width: 450px;
     padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 250px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    
+    h3 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
+        opacity: 0.9;
+    }
 `;
 
-const Icon = styled.img`
-    width: 50px;
+/* Ícone de cada característica */
+const FeatureIcon = styled.div`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 `;
 
-const Text = styled.p`
-    margin-top: 10px;
-    font-size: 1rem;
-    color: #333;
+/* Ícone "+" personalizado */
+const PlusIcon = styled.span`
+    font-size: 2rem;
+    color: #00A9A5;
 `;

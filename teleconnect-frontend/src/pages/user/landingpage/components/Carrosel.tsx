@@ -1,47 +1,91 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
 
-export const Hero = () => {
+export const Carousel = () => {
+    const images = ["/propaganda1.png", "/produtos.png", "/fotoCliente.png"];
+    const [currentIndex, setCurrentIndex] = useState(0);
+
+    // Função para avançar automaticamente o slide
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
-        <HeroContainer>
-            <TextContent>
-                <Title>Conectando possibilidades, transformando o futuro</Title>
-                <OfferBox>700 MB Fibra + 50 GB Celular</OfferBox>
-            </TextContent>
-            <HeroImage src="/hero-image.png" alt="Mulher usando laptop" />
-        </HeroContainer>
+        <CarouselContainer>
+            {/* Slides */}
+            <SlideWrapper currentIndex={currentIndex}>
+                {images.map((image, index) => (
+                    <Slide key={index}>
+                        <img src={image} alt={`Slide ${index + 1}`} />
+                    </Slide>
+                ))}
+            </SlideWrapper>
+
+            {/* Indicadores (bolinhas) */}
+            <Indicators>
+                {images.map((_, index) => (
+                    <Indicator key={index} active={index === currentIndex} onClick={() => setCurrentIndex(index)} />
+                ))}
+            </Indicators>
+        </CarouselContainer>
     );
 };
 
-const HeroContainer = styled.div`
+/* ======= Styled Components ======= */
+
+/* Container principal do carrossel */
+const CarouselContainer = styled.div`
+    position: relative;
+    width: 100vw;
+    max-width: 100%;
+    height: 100%;
+    overflow: hidden;
+    max-height: 600px; /* 🔹 Define a altura máxima */
+`;
+
+/* Wrapper para os slides */
+const SlideWrapper = styled.div<{ currentIndex: number }>`
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 60px 10%;
-    background: linear-gradient(to right, #1e3a8a, #2563eb);
-    color: white;
+    transition: transform 0.5s ease-in-out;
+    transform: translateX(${(props) => -props.currentIndex * 100}%);
 `;
 
-const TextContent = styled.div`
-    max-width: 50%;
+/* Slide individual */
+const Slide = styled.div`
+    flex: 0 0 100%;
+    width: 100vw;
+    height: 100%;
+
+    img {
+        width: 100%;
+        height: 100%;
+        max-height: 600px;
+        object-fit: cover; /* 🔹 Mantém proporções sem distorcer */
+    }
 `;
 
-const Title = styled.h1`
-    font-size: 2.5rem;
-    font-weight: bold;
+/* Indicadores (bolinhas) */
+const Indicators = styled.div`
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
 `;
 
-const OfferBox = styled.div`
-    background: white;
-    color: #1e3a8a;
-    padding: 10px 20px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-top: 20px;
-    display: inline-block;
-    border-radius: 8px;
-`;
+const Indicator = styled.div<{ active: boolean }>`
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: ${(props) => (props.active ? "#fff" : "#bbb")};
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
 
-const HeroImage = styled.img`
-    width: 400px;
-    border-radius: 10px;
+    &:hover {
+        background: #fff;
+    }
 `;
