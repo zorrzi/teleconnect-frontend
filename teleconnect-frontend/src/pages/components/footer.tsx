@@ -53,7 +53,7 @@ const FooterContainer = styled.footer`
     justify-content: space-between;
     align-items: flex-start;
     padding: 2rem;
-    background: white;
+    background: #F7F7F7;
     box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.05);
 
     @media (max-width: 720px) {
