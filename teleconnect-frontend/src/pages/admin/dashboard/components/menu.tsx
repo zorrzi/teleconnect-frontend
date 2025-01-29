@@ -1,5 +1,6 @@
 import { menuItems } from "../constants/menu-items";
 import styled from "styled-components";
+import { LogoutButton } from "./LogoutButton/LogoutButton";
 
 export const Menu = () => {
     return (
@@ -17,9 +18,13 @@ export const Menu = () => {
                     );
                 })}
             </MenuList>
+            
+                <LogoutButton />
+            
         </MenuStyles>
     );
 };
+
 
 const MenuStyles = styled.div`
     grid-column: 1; /* Define que o Menu ocupa a primeira coluna do grid */
