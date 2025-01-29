@@ -23,7 +23,7 @@ export const LoginForm = () => {
         try {
             await loginUser(formData.email, formData.password);
             toast.success("Login realizado com sucesso!");
-            navigate("/user/dashboard");
+            navigate("/");
         } catch (error) {
             toast.error("Erro ao fazer login. Verifique suas credenciais.");
         }

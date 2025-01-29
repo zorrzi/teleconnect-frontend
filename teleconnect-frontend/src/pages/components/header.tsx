@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa"; // Ícones de usuário e hambúrguer
 import { IoChevronDownOutline } from "react-icons/io5"; // Ícone de dropdown
@@ -7,10 +7,17 @@ import { IoChevronDownOutline } from "react-icons/io5"; // Ícone de dropdown
 export const Header = () => {
     const [activeTab, setActiveTab] = useState("Para Você");
     const [menuOpen, setMenuOpen] = useState(false);
+    const [userName, setUserName] = useState<string | null>(null);
+
+    useEffect(() => {
+        const storedName = localStorage.getItem("user_name");
+        if (storedName) {
+            setUserName(storedName);
+        }
+    }, []);
 
     return (
         <>
-            {/* Barra Superior */}
             <TopBar>
                 <Tab active={activeTab === "Para Você"} onClick={() => setActiveTab("Para Você")}>
                     Para Você
@@ -66,24 +73,32 @@ export const Header = () => {
 
                     {/* Login dentro do menu para telas pequenas */}
                     <MobileLogin>
-                        <Link to="/login">
-                            <FaUser /> Login
-                        </Link>
+                        {userName ? (
+                            <span>Bem-vindo, {userName}!</span>
+                        ) : (
+                            <Link to="/user/login">
+                                <FaUser /> Login
+                            </Link>
+                        )}
                     </MobileLogin>
                 </Nav>
 
                 {/* Login para telas grandes */}
                 <LoginSection>
-                    <Link to="/login">
-                        <FaUser /> Login
-                    </Link>
+                    {userName ? (
+                        <span>Bem-vindo, {userName}!</span>
+                    ) : (
+                        <Link to="/user/login">
+                            <FaUser /> Login
+                        </Link>
+                    )}
                 </LoginSection>
             </HeaderContainer>
         </>
     );
 };
 
-/* ======= Estilos ======= */
+
 
 /* Paleta de Cores */
 const colors = {

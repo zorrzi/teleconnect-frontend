@@ -5,10 +5,10 @@ export const registerUser = async (userData: {
     cpf: string;
     phone: string;
     email: string;
-    password: string;
+    password: string;   
     name: string;
 }) => {
-    const response = await fetch(`${config.apiBaseUrl}/auth/register`, {
+    const response = await fetch(`${config.apiBaseUrl}/user/auth/register`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
