@@ -7,9 +7,9 @@ export const Features = () => {
             <FeatureBox>
                 <FeatureIcon>
                     <PlusIcon>+</PlusIcon>
+                    <h3>Perto de você!</h3>
                     <MapPin size={24} weight="bold" />
                 </FeatureIcon>
-                <h3>Perto de você!</h3>
                 <p>
                     Estamos presentes em <strong>Belo Horizonte, Campinas, Juíz de Fora, Niterói, Petrópolis, Rio de Janeiro, Santos, São Paulo, Serra, Uberlândia, Vila Velha, Vitória.</strong>
                 </p>
@@ -18,11 +18,11 @@ export const Features = () => {
             <FeatureBox>
                 <FeatureIcon>
                     <PlusIcon>+</PlusIcon>
+                    <h3>Velocidade</h3>
                     <RocketLaunch size={24} weight="bold" />
                 </FeatureIcon>
-                <h3>Velocidade</h3>
                 <p>
-                    Experimente a máxima velocidade com nossos produtos! Roteadores **5G** de última geração garantem uma conexão estável, rápida e de longo alcance. Assista vídeos em **4K**, jogue online e conecte todos os seus dispositivos com facilidade.
+                    Experimente a máxima velocidade com nossos produtos! Roteadores 5G de última geração garantem uma conexão estável, rápida e de longo alcance. Assista vídeos em 4K, jogue online e conecte todos os seus dispositivos com facilidade.
                 </p>
             </FeatureBox>
         </FeaturesContainer>
@@ -53,26 +53,25 @@ const FeatureBox = styled.div`
     padding: 20px;
     
     h3 {
-        font-size: 1.5rem;
+        font-size: 2rem;
         font-weight: bold;
-        margin-bottom: 10px;
     }
 
     p {
-        font-size: 1rem;
+        font-size: 1.1rem;
         line-height: 1.6;
-        opacity: 0.9;
     }
 `;
 
 /* Ícone de cada característica */
 const FeatureIcon = styled.div`
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 10px;
     font-size: 2rem;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 1rem;
 `;
 
 /* Ícone "+" personalizado */
