@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { LoginForm } from "./components/loginFormUser";
-import { LoginImage } from "./components/loginimage";
+import { LoginImage } from "./components/loginImage";
+import { Link } from "react-router-dom";
 
 export const Login = () => {
     return (
         <LoginContainer>
             <LogoWrapper>
-                <Logo src="/logo.png" alt="Logo Teleconnect" />
+            <Link to="/">
+                    <Logo src="/logo.png" alt="Logo Teleconnect" />
+                </Link>
             </LogoWrapper>
             <FormWrapper>
                 <LoginForm />

@@ -1,12 +1,15 @@
 import styled from "styled-components";
 import { LoginFormDirector } from "./components/loginFormAdmin";
 import { LoginImage } from "./components/loginImage";
+import { Link } from "react-router-dom";
 
 export const LoginAdmin = () => {
     return (
         <LoginContainer>
             <LogoWrapper>
-                <Logo src="/logo.png" alt="Logo Teleconnect" />
+                <Link to="/">
+                    <Logo src="/logo.png" alt="Logo Teleconnect" />
+                </Link>
             </LogoWrapper>
             <FormWrapper>
                 <LoginFormDirector />
@@ -33,11 +36,16 @@ const LogoWrapper = styled.div`
     top: 20px;
     left: 20px;
     z-index: 10;
+
+    a {
+        text-decoration: none;
+    }
 `;
 
 const Logo = styled.img`
     width: 150px;
     height: auto;
+    cursor: pointer; /* Adiciona um cursor de ponteiro para indicar que é clicável */
 
     @media (max-width: 768px) {
         width: 120px; /* Ajusta o tamanho em telas menores */
