@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { listPackages, Package } from "./FetchPackages";
+import { DeletePackageButton } from "../DeletePackage/DeletePackageButton";
+import { CheckCircle } from "phosphor-react";
 
 export const ListPackages = () => {
     const [packages, setPackages] = useState<Package[]>([]);
@@ -8,218 +10,186 @@ export const ListPackages = () => {
     const [error, setError] = useState<string>("");
 
     useEffect(() => {
-        const fetchPackages = async () => {
-            try {
-                const { data, response } = await listPackages();
-                if (response.ok) {
-                    setPackages(data);
-                } else {
-                    setError("Erro ao carregar pacotes.");
-                }
-            } catch (err) {
-                console.error("Erro ao buscar pacotes:", err);
-                setError("Erro ao carregar pacotes.");
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchPackages();
     }, []);
+
+    const fetchPackages = async () => {
+        setLoading(true);
+        try {
+            const { data, response } = await listPackages();
+            if (response.ok) {
+                setPackages(data);
+            } else {
+                setError("Erro ao carregar pacotes.");
+            }
+        } catch (err) {
+            setError("Erro ao carregar pacotes.");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) return <Loading>Carregando pacotes...</Loading>;
     if (error) return <Error>{error}</Error>;
 
     return (
         <CatalogContainer>
-            {packages.map((pkg) => {
-                if (pkg.fiber) {
-                    return (
-                        <FiberCard key={pkg._id}>
-                            <FiberTitle>{pkg.fiber}</FiberTitle>
-                            <FiberPrice>R${pkg.price}</FiberPrice>
-                            <FiberSubtitle>Por mês</FiberSubtitle>
-                            {pkg.streaming_partnership && (
-                                <StreamingInfo>+ {pkg.streaming_partnership}</StreamingInfo>
+            {packages.map((pkg) => (
+                <PackageCard key={pkg._id}>
+                    <TopSection>
+                        <TriangleImage src="/triangulo.png" alt="Destaque" />
+                    </TopSection>
+                    <Content>
+                        <Title>{pkg.fiber || pkg.mobile_service || "Pacote"}</Title>
+                        <Price>R$ {pkg.price.toFixed(2)}</Price>
+                        <Subtitle>Por mês</Subtitle>
+
+                        {pkg.streaming_partnership && (
+                            <Feature>+ {pkg.streaming_partnership}</Feature>
+                        )}
+
+                        <Features>
+                            {pkg.fiber_amount && (
+                                <Feature>
+                                    <CheckCircle size={20} /> {pkg.fiber_amount} MB de Fibra
+                                </Feature>
                             )}
-                            <FiberDetails>{pkg.fiber_amount} MB de Fibra</FiberDetails>
-                            <ActionButton>Assine Já</ActionButton>
-                        </FiberCard>
-                    );
-                } else if (pkg.mobile_service) {
-                    return (
-                        <MobileCard key={pkg._id}>
-                            <MobileTitle>Serviço {pkg.mobile_service}</MobileTitle>
-                            <MobilePrice>R${pkg.price}</MobilePrice>
-                            <MobileSubtitle>Por mês</MobileSubtitle>
                             {pkg.mobile_service_amount && (
-                                <MobileDetails>{pkg.mobile_service_amount} GB de Internet</MobileDetails>
+                                <Feature>
+                                    <CheckCircle size={20} /> {pkg.mobile_service_amount} GB de Celular
+                                </Feature>
                             )}
-                            <ActionButton>Assine Já</ActionButton>
-                        </MobileCard>
-                    );
-                } else if (pkg.fixed_phone) {
-                    return (
-                        <FixedCard key={pkg._id}>
-                            <FixedTitle>Telefone Fixo</FixedTitle>
-                            <FixedPrice>R${pkg.price}</FixedPrice>
-                            <FixedSubtitle>Por mês</FixedSubtitle>
-                            <FixedDetails>Inclui ligação ilimitada</FixedDetails>
-                            <ActionButton>Assine Já</ActionButton>
-                        </FixedCard>
-                    );
-                } else {
-                    return (
-                        <GenericCard key={pkg._id}>
-                            <GenericTitle>Pacote Desconhecido</GenericTitle>
-                            <GenericPrice>R${pkg.price}</GenericPrice>
-                            <ActionButton>Assine Já</ActionButton>
-                        </GenericCard>
-                    );
-                }
-            })}
+                            {pkg.fixed_phone && (
+                                <Feature>
+                                    <CheckCircle size={20} /> Telefone Fixo Incluso
+                                </Feature>
+                            )}
+                        </Features>
+                    </Content>
+
+                    <LowerSection>
+                        <DeletePackageButton packageId={pkg._id} onPackageDeleted={fetchPackages} />
+                    </LowerSection>
+                </PackageCard>
+            ))}
         </CatalogContainer>
     );
 };
 
+/* ======= Estilos Atualizados ======= */
+
 const CatalogContainer = styled.div`
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
     padding: 20px;
+    justify-content: center;
 `;
 
-/* Estilo para Fibra */
-const FiberCard = styled.div`
-    background-color: #e3f2fd;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 15rem;
-    height: 20rem;
-    margin: 0 auto;
-
+/* 🔹 Estilização do Card */
+const PackageCard = styled.div`
     display: flex;
-    flex-direction: column; /* Organiza os elementos em uma coluna */
-    justify-content: space-between; /* Coloca o botão na parte inferior */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 280px;
+    height: 400px;
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease-in-out;
+
 `;
 
-const FiberTitle = styled.h3`
-    font-size: 1.4rem;
+/* 🔹 Imagem no topo do card */
+const TopSection = styled.div`
+    position: relative;
+    width: 100%;
+    height: 80px;
+`;
+
+const TriangleImage = styled.img`
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: auto;
+`;
+
+/* 🔹 Conteúdo do Card */
+const Content = styled.div`
+    padding: 1.5rem;
+    text-align: center;
+`;
+
+const Title = styled.h3`
+    font-size: 1.8rem;
     font-weight: bold;
-    color: #003366;
+    color: #003B5C;
     margin-bottom: 10px;
 `;
 
-const FiberPrice = styled.p`
-    font-size: 4rem;
-    color: #003366;
+const Price = styled.p`
+    font-size: 2.5rem;
     font-weight: bold;
-    margin: 0;
+    color: #003B5C;
+    margin-bottom: 5px;
 `;
 
-const FiberSubtitle = styled.p`
+const Subtitle = styled.p`
     font-size: 1rem;
-    color: #555;
-    margin: 0;
+    color: #666;
+    margin-bottom: 15px;
 `;
 
-const StreamingInfo = styled.p`
-    font-size: 1.5rem;
-    color: #d32f2f;
-    margin: 10px 0;
-`;
-
-const FiberDetails = styled.p`
-    font-size: 1.3rem;
-    color: #003366;
-    margin: 20px 0;
+const Feature = styled.p`
+    font-size: 1rem;
+    font-weight: bold;
+    color: #3CBBB4;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-
-    &::before {
-        content: "✔";
-        color: #003366;
-        margin-right: 8px;
-    }
+    gap: 6px;
 `;
 
-/* Estilo para Móvel */
-const MobileCard = styled(FiberCard)`
-    background-color: #dff7df;
+const Features = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 1rem;
 `;
 
-const MobileTitle = styled(FiberTitle)`
-    color: #006400;
+/* 🔹 Seção Inferior do Card */
+const LowerSection = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0 0 12px 12px;
 `;
 
-const MobilePrice = styled(FiberPrice)`
-    color: #006400;
-`;
-
-const MobileSubtitle = styled(FiberSubtitle)`
-    color: #555;
-`;
-
-const MobileDetails = styled(FiberDetails)`
-    color: #006400;
-`;
-
-/* Estilo para Telefone Fixo */
-const FixedCard = styled(FiberCard)`
-    background-color: #fdeaea;
-`;
-
-const FixedTitle = styled(FiberTitle)`
-    color: #b22222;
-`;
-
-const FixedPrice = styled(FiberPrice)`
-    color: #b22222;
-`;
-
-const FixedSubtitle = styled(FiberSubtitle)`
-    color: #555;
-`;
-
-const FixedDetails = styled(FiberDetails)`
-    color: #b22222;
-`;
-
-/* Estilo para Pacote Genérico */
-const GenericCard = styled(FiberCard)`
-    background-color: #f5f5f5;
-`;
-
-const GenericTitle = styled(FiberTitle)`
-    color: #555;
-`;
-
-const GenericPrice = styled(FiberPrice)`
-    color: #555;
-`;
-
-const ActionButton = styled.button`
-    background-color: #FFA82E;
+/* 🔹 Botão de Assinatura */
+const SubscribeButton = styled.button`
+    width: 70%;
+    padding: 12px;
+    background-color: #FFA14A;
     color: white;
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: bold;
-    padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.3s ease;
 
     &:hover {
-        background-color: #fb8c00;
+        background-color: #E88E3A;
     }
-
-    margin-top: auto; /* Empurra o botão para a parte inferior */
 `;
 
+/* 🔹 Indicador de Carregamento */
 const Loading = styled.div`
     text-align: center;
     padding: 20px;
@@ -227,6 +197,7 @@ const Loading = styled.div`
     color: #333;
 `;
 
+/* 🔹 Indicador de Erro */
 const Error = styled.div`
     text-align: center;
     padding: 20px;
