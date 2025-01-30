@@ -20,7 +20,6 @@ export const ProdutosPessoa = () => {
                 {/* Nested de produtos */}
                 <Outlet />
 
-                <Teste> Muito Obrigado</Teste>
             </Container>
         </>
     );
@@ -54,10 +53,4 @@ const Description = styled.p`
     font-size: 1.2rem;
     color: #666;
     margin-top: 0.5rem;
-`;
-
-const Teste = styled.div`
-    font-size: 1.2rem;
-    color: #666;
-    margin: 2rem;
 `;

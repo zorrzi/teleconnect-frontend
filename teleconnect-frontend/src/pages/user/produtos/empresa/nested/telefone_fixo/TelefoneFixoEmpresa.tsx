@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { listPackages, Package } from "../../../api/getPackages";
 import { PackageCard } from "../../../components/PackageCard";
 
-export const PosPagoPage = () => {
+export const TelefoneFixoEmpresa = () => {
     const [packages, setPackages] = useState<Package[]>([]);
     const [loading, setLoading] = useState(true);
 
@@ -11,7 +11,7 @@ export const PosPagoPage = () => {
         const fetchPackages = async () => {
             try {
                 const { data } = await listPackages();
-                const filteredPackages = data.filter(pack => pack.mobile_service === "Pós-pago" && !pack.is_b2b);
+                const filteredPackages = data.filter(pack => pack.fixed_phone && pack.is_b2b);
                 setPackages(filteredPackages);
             } catch (error) {
                 console.error("Erro ao carregar pacotes:", error);
@@ -24,7 +24,7 @@ export const PosPagoPage = () => {
 
     return (
         <Container>
-            <Title>Planos Pós-Pagos</Title>
+            <Title>Planos de Telefone Fixo</Title>
             {loading ? <Loading>Carregando...</Loading> : (
                 <PackageList>
                     {packages.length > 0 ? packages.map(pack => (

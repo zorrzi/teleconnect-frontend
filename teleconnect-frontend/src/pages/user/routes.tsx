@@ -11,6 +11,8 @@ import { PrePagoPage } from "./produtos/pessoa/nested/Pre_Pago/Pre_Pago.tsx";
 import { PosPagoPage } from "./produtos/pessoa/nested/Pos_pago/Pos_Pago.tsx";
 import { InternetFibraPage } from "./produtos/pessoa/nested/Internet_Fibra/InternetFibraPage.tsx";
 import { TelefoneFixoPage } from "./produtos/pessoa/nested/Telefone_Fixo/TelefoneFixoPage.tsx";
+import { InternetFibraEmpresa } from "./produtos/empresa/nested/internet_fibra/InternetFibraEmpresa";
+import { TelefoneFixoEmpresa } from "./produtos/empresa/nested/telefone_fixo/TelefoneFixoEmpresa.tsx";
 
 
 const routes: RouteObject[] = [
@@ -35,7 +37,15 @@ const routes: RouteObject[] = [
         path: "user/produtos",
         element: <ProdutosBase />, // 📌 Página base
         children: [
-            { path: "empresa", element: <ProdutosEmpresa />, id: "produtos-empresa" },
+            {   path: "empresa", 
+                element: <ProdutosEmpresa />, 
+                id: "produtos-empresa", 
+                children: [
+                    { index: true, loader: () => redirect("fibra") }, // 🔥 Redireciona para pré-pago
+                    { path: "fibra", element: <InternetFibraEmpresa />, id: "fibra" },
+                    { path: "fixo", element: <TelefoneFixoEmpresa />, id: "fixo" },
+                ]
+            },
             { 
                 path: "pessoa", 
                 element: <ProdutosPessoa />, 
