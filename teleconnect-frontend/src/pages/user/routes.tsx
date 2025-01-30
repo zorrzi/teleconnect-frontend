@@ -37,6 +37,7 @@ const routes: RouteObject[] = [
         path: "user/produtos",
         element: <ProdutosBase />, // 📌 Página base
         children: [
+            { index: true, loader: () => redirect("pessoa") },
             {   path: "empresa", 
                 element: <ProdutosEmpresa />, 
                 id: "produtos-empresa", 
