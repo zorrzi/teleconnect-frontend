@@ -1,13 +1,15 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FaUser, FaBars, FaTimes } from "react-icons/fa"; // Ícones de usuário e hambúrguer
-import { IoChevronDownOutline } from "react-icons/io5"; // Ícone de dropdown
+import { Link, useNavigate } from "react-router-dom";
+import { FaUser, FaBars, FaTimes } from "react-icons/fa"; 
+import { IoChevronDownOutline } from "react-icons/io5"; 
 
 export const Header = () => {
     const [activeTab, setActiveTab] = useState("Para Você");
     const [menuOpen, setMenuOpen] = useState(false);
     const [userName, setUserName] = useState<string | null>(null);
+    const [dropdownOpen, setDropdownOpen] = useState(false); // Estado do dropdown
+    const navigate = useNavigate();
 
     useEffect(() => {
         const storedName = localStorage.getItem("user_name");
@@ -15,6 +17,14 @@ export const Header = () => {
             setUserName(storedName);
         }
     }, []);
+
+    // 🔥 Função para fazer logout
+    const handleLogout = () => {
+        localStorage.removeItem("user_name"); 
+        localStorage.removeItem("user_auth_token"); 
+        setUserName(null);
+        setDropdownOpen(false);
+    };
 
     return (
         <>
@@ -74,7 +84,17 @@ export const Header = () => {
                     {/* Login dentro do menu para telas pequenas */}
                     <MobileLogin>
                         {userName ? (
-                            <span>Bem-vindo, {userName}!</span>
+                            <UserDropdown>
+                                <UserButton onClick={() => setDropdownOpen(!dropdownOpen)}>
+                                    <FaUser /> {userName}
+                                </UserButton>
+                                {dropdownOpen && (
+                                    <DropdownMenu>
+                                        <DropdownItem onClick={() => navigate("/meus-planos")}>Meus Planos</DropdownItem>
+                                        <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                                    </DropdownMenu>
+                                )}
+                            </UserDropdown>
                         ) : (
                             <Link to="/user/login">
                                 <FaUser /> Login
@@ -86,7 +106,17 @@ export const Header = () => {
                 {/* Login para telas grandes */}
                 <LoginSection>
                     {userName ? (
-                        <span>Bem-vindo, {userName}!</span>
+                        <UserDropdown>
+                            <UserButton onClick={() => setDropdownOpen(!dropdownOpen)}>
+                                <FaUser /> {userName}
+                            </UserButton>
+                            {dropdownOpen && (
+                                <DropdownMenu>
+                                    <DropdownItem onClick={() => navigate("/meus-planos")}>Meus Planos</DropdownItem>
+                                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                                </DropdownMenu>
+                            )}
+                        </UserDropdown>
                     ) : (
                         <Link to="/user/login">
                             <FaUser /> Login
@@ -97,6 +127,7 @@ export const Header = () => {
         </>
     );
 };
+
 
 
 
@@ -283,5 +314,54 @@ const MobileLogin = styled.div`
                 text-decoration: underline;
             }
         }
+    }
+`;
+
+// Dropdown do usuário
+
+const UserDropdown = styled.div`
+    position: relative;
+    display: inline-block;
+`;
+
+const UserButton = styled.button`
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #333;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+`;
+
+const DropdownMenu = styled.div`
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    width: 150px;
+    z-index: 100;
+`;
+
+const DropdownItem = styled.button`
+    background: none;
+    border: none;
+    padding: 10px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #333;
+    cursor: pointer;
+    width: 100%;
+
+    &:hover {
+        background-color: #30BBB3;
+        color: white;
     }
 `;
