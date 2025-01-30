@@ -187,7 +187,6 @@ const TopBar = styled.div`
   gap: 1rem;
   padding: 0.3rem 1rem;
   background: ${colors.bgLight};
-  font-size: 0.5rem;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px,
     rgba(0, 0, 0, 0.23) 0px 3px 6px;
 `;
@@ -199,6 +198,8 @@ const TopBar = styled.div`
 const Tab = styled.button<{ $active: boolean }>`
   background: none;
   border: none;
+  font-size: 0.9rem;
+  font-family: 'Smooch Sans', sans-serif;
   font-weight: ${(props) => (props.$active ? "bold" : "normal")};
   color: ${(props) => (props.$active ? colors.primary : colors.gray)};
   cursor: pointer;
@@ -243,6 +244,7 @@ const Hamburger = styled.button`
   background: none;
   border: none;
   cursor: pointer;
+  font-family: 'Smooch Sans', sans-serif;
 
   @media (max-width: 720px) {
     display: block;
@@ -259,7 +261,6 @@ const Nav = styled.nav<{ $menuopen: boolean }>`
   display: flex;
   align-items: flex-start;
   gap: 40px;
-  margin-left: 20%;
 
   @media (max-width: 720px) {
     display: ${(props) => (props.$menuopen ? "flex" : "none")};
@@ -285,13 +286,14 @@ const Dropdown = styled.div`
 const DropdownButton = styled.button`
   background: none;
   border: none;
-  font-size: 0.85rem;
+  font-size: 1.1rem;
   font-weight: bold;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 5px;
   color: ${colors.gray};
+  font-family: 'Smooch Sans', sans-serif;
 
   &:hover {
     color: ${colors.primary};
@@ -379,6 +381,7 @@ const UserButton = styled.button`
   font-weight: bold;
   color: #333;
   background-color: transparent;
+  font-family: 'Smooch Sans', sans-serif;
   border: none;
   cursor: pointer;
 `;
@@ -406,6 +409,7 @@ const DropdownItem = styled.button`
   color: #333;
   cursor: pointer;
   width: 100%;
+  font-family: 'Smooch Sans', sans-serif;
 
   &:hover {
     background-color: #30bbb3;

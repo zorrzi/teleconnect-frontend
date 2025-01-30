@@ -13,6 +13,8 @@ import { InternetFibraPage } from "./produtos/pessoa/nested/Internet_Fibra/Inter
 import { TelefoneFixoPage } from "./produtos/pessoa/nested/Telefone_Fixo/TelefoneFixoPage.tsx";
 import { InternetFibraEmpresa } from "./produtos/empresa/nested/internet_fibra/InternetFibraEmpresa";
 import { TelefoneFixoEmpresa } from "./produtos/empresa/nested/telefone_fixo/TelefoneFixoEmpresa.tsx";
+import { PaymentPage } from "./payment/PaymentPage.tsx";
+import { PaymentConfirmation } from "./paymentDone/PaymentConfirmation.tsx";
 
 
 const routes: RouteObject[] = [
@@ -60,6 +62,19 @@ const routes: RouteObject[] = [
                 ]
             },        ],
     },
+    {
+        path: "/pagamento", 
+        element: <PaymentPage />,
+        id: "pagamento",
+    },
+
+    {
+        path: "/pagamento/confirmado",
+        element: <PaymentConfirmation />,
+        id: "pagamento-confirmado",
+    }
+
+    
 ];
 
 export default routes;

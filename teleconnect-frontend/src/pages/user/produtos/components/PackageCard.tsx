@@ -1,12 +1,18 @@
 import styled from "styled-components";
 import { Package } from "../api/getPackages";
 import { CheckCircle } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 
 interface PackageCardProps {
     pack: Package;
 }
 
 export const PackageCard = ({ pack }: PackageCardProps) => {
+    const navigate = useNavigate();
+
+    const handleSubscribe = () => {
+        navigate("/pagamento", { state: { packageData: pack } });
+    }
     return (
         <Card>
             <TopSection>
@@ -27,7 +33,7 @@ export const PackageCard = ({ pack }: PackageCardProps) => {
 
             </Content>
             <LowerSection>
-                <SubscribeButton>Assine Já</SubscribeButton>
+                <SubscribeButton onClick={handleSubscribe}>Assine Já</SubscribeButton>
             </LowerSection>
         </Card>
     );
