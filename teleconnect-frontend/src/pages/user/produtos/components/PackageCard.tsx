@@ -14,7 +14,9 @@ export const PackageCard = ({ pack }: PackageCardProps) => {
     const handleSubscribe = async () => {
         const isValidSession = await ValidateSession();
         if (isValidSession) {
-            navigate("/pagamento", { state: { packageData: pack } });
+            console.log(pack);
+            console.log(pack._id);
+            navigate("/pagamento", { state: { packageData: pack} });
         } else {
             navigate("/user/login"); // Redireciona para a página de login
         }
@@ -27,7 +29,7 @@ export const PackageCard = ({ pack }: PackageCardProps) => {
             </TopSection>
             <Content>
                 <Title>{pack.fiber || pack.mobile_service || "Pacote"}</Title>
-                <Price>R$ {pack.price.toFixed(2)}</Price>
+                <Price>R$ {pack.price}</Price>
                 <Subtitle>Por mês</Subtitle>
 
                 {pack.streaming_partnership && <Feature>+ {pack.streaming_partnership}</Feature>}
