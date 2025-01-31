@@ -76,19 +76,21 @@ export const Header = () => {
         </Tab>
       </TopBar>
 
-      {/* Header Principal */}
-      <HeaderContainer>
-        <Logo>
-          <Link to="/">
-            <img src="/logo.png" alt="Teleconnect Logo" />
-          </Link>
-        </Logo>
+{/* Header Principal */}
+<HeaderContainer>
+      <Logo>
+        <Link to="/">
+          <img src="/logo.png" alt="Teleconnect Logo" />
+        </Link>
+      </Logo>
 
-        {/* Ícone do Menu Hambúrguer para telas pequenas */}
-        <Hamburger onClick={() => setmenuopen(!menuopen)} aria-label="Abrir Menu">
-          {menuopen ? <FaTimes /> : <FaBars />}
-        </Hamburger>
+      {/* Ícone do Menu Hambúrguer para telas pequenas */}
+      <Hamburger onClick={() => setmenuopen(!menuopen)} aria-label="Abrir Menu">
+        {menuopen ? <FaTimes /> : <FaBars />}
+      </Hamburger>
 
+      {/* Wrapper para alinhar itens do menu na direita */}
+      <NavWrapper>
         {/* Menu de Navegação */}
         <Nav $menuopen={menuopen}>
           <Dropdown>
@@ -113,7 +115,7 @@ export const Header = () => {
             </DropdownButton>
             <DropdownContent>
               <Link to="/user/produtos/pessoa/pre-pago">Pré Pago</Link>
-              <Link to="/user/produtos/pessoa/pre-pago">Pós Pago</Link>
+              <Link to="/user/produtos/pessoa/pos-pago">Pós Pago</Link>
               <Link to="/user/produtos/pessoa/internet-fibra">Internet Fibra</Link>
               <Link to="/user/produtos/pessoa/telefone-fixo">Telefone Fixo</Link>
             </DropdownContent>
@@ -127,29 +129,6 @@ export const Header = () => {
               <Link to="/user/produtos/empresa/fixo">Telefone Fixo</Link>
             </DropdownContent>
           </Dropdown>
-
-          {/* Login dentro do menu para telas pequenas */}
-          <MobileLogin>
-            {userName ? (
-              <UserDropdown>
-                <UserButton onClick={() => setDropdownOpen(!dropdownOpen)}>
-                  <FaUser /> {userName}
-                </UserButton>
-                {dropdownOpen && (
-                  <DropdownMenu>
-                    <DropdownItem onClick={() => navigate("/user/meus-planos")}>
-                      Meus Planos
-                    </DropdownItem>
-                    <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
-                  </DropdownMenu>
-                )}
-              </UserDropdown>
-            ) : (
-              <Link to="/user/login">
-                <FaUser /> Login
-              </Link>
-            )}
-          </MobileLogin>
         </Nav>
 
         {/* Login para telas grandes */}
@@ -174,8 +153,9 @@ export const Header = () => {
             </Link>
           )}
         </LoginSection>
-      </HeaderContainer>
-    </>
+      </NavWrapper>
+    </HeaderContainer>
+  </>
   );
 };
 
@@ -187,6 +167,13 @@ const colors = {
   bgLight: "#f5f5f5",
   borderGray: "#ddd",
 };
+
+const NavWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 20px;
+`;
 
 /* Barra Superior */
 const TopBar = styled.div`
