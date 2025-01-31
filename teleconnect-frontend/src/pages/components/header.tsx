@@ -131,7 +131,7 @@ export const Header = () => {
                 </UserButton>
                 {dropdownOpen && (
                   <DropdownMenu>
-                    <DropdownItem onClick={() => navigate("/meus-planos")}>
+                    <DropdownItem onClick={() => navigate("/user/meus-planos")}>
                       Meus Planos
                     </DropdownItem>
                     <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
@@ -155,7 +155,7 @@ export const Header = () => {
               </UserButton>
               {dropdownOpen && (
                 <DropdownMenu>
-                  <DropdownItem onClick={() => navigate("/meus-planos")}>
+                  <DropdownItem onClick={() => navigate("/user/meus-planos")}>
                     Meus Planos
                   </DropdownItem>
                   <LogoutButton onLogout={handleLogout} />
