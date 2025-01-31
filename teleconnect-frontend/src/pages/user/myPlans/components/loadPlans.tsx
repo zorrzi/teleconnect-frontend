@@ -98,7 +98,6 @@ export function MeusPlanos() {
               </Details>
             </Content>
             <Footer>
-              <CancelButton>Cancelar Plano</CancelButton>
             </Footer>
           </Card>
         ))}
