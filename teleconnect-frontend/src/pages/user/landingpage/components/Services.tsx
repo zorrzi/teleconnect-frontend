@@ -58,25 +58,25 @@ const serviceData = [
     title: "Internet Fibra",
     description: "Internet de melhor qualidade e mais veloz",
     icon: <WifiHigh size={48} weight="bold" />,
-    link: "/internet-fibra",
+    link: "/user/produtos/pessoa/internet-fibra",
   },
   {
     title: "Telefonia Móvel",
     description: "A melhor rede móvel, implementada com o MVNO",
     icon: <Phone size={48} weight="bold" />,
-    link: "/telefonia-movel",
+    link: "/user/produtos/pessoa/pre-pago",
   },
   {
     title: "Telefonia Fixa",
     description: "Não tenha preocupações com a bateria do seu celular",
     icon: <DeviceTabletSpeaker size={48} weight="bold" />,
-    link: "/telefonia-fixa",
+    link: "/user/produtos/pessoa/telefone-fixo",
   },
   {
     title: "Pacotes Corporativos",
     description: "Leve a internet para dentro da sua empresa",
     icon: <Briefcase size={48} weight="bold" />,
-    link: "/pacotes-corporativos",
+    link: "/user/produtos/empresa/fibra",
   },
 ];
 
