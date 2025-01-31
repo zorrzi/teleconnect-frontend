@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { IoChevronDownOutline } from "react-icons/io5";
+import { LogoutButton } from "../user/landingpage/components/logoutButton/logoutButton";
 
 export const Header = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ export const Header = () => {
     setUserName(null);
     setDropdownOpen(false);
   };
+
 
   return (
     <>
@@ -156,7 +158,7 @@ export const Header = () => {
                   <DropdownItem onClick={() => navigate("/meus-planos")}>
                     Meus Planos
                   </DropdownItem>
-                  <DropdownItem onClick={handleLogout}>Logout</DropdownItem>
+                  <LogoutButton onLogout={handleLogout} />
                 </DropdownMenu>
               )}
             </UserDropdown>

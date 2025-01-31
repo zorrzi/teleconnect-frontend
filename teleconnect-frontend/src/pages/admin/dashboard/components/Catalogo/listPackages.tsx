@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { listPackages, Package } from "./FetchPackages";
-import { DeletePackageButton } from "../DeletePackage/DeletePackageButton";
+import { DeletePackageButton } from "../DeletePackage/deletePackageButton";
 import { CheckCircle } from "phosphor-react";
 
 export const ListPackages = () => {
