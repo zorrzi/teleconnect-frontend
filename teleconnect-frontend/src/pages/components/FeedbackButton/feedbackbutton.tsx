@@ -1,8 +1,10 @@
+// src/components/FeedbackButton/feedbackbutton.tsx
 import { useState } from "react";
 import styled from "styled-components";
 import { Star } from "phosphor-react";
 
 interface FeedbackButtonProps {
+  // Recebe uma função que recebe "feedbackText" e "stars"
   onSubmitFeedback: (feedbackText: string, stars: number) => void;
 }
 
@@ -14,10 +16,12 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
   const [hoveredStars, setHoveredStars] = useState(0);
   const [feedbackText, setFeedbackText] = useState("");
 
+  // Clique na estrela
   const handleStarClick = (stars: number) => {
     setSelectedStars(stars);
   };
 
+  // Hover nas estrelas
   const handleStarHover = (stars: number) => {
     setHoveredStars(stars);
   };
@@ -33,11 +37,13 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
     setFeedbackText("");
   };
 
+  // Ao clicar em "Enviar" no modal
   const handleSubmit = () => {
     if (selectedStars === 0 || feedbackText.trim() === "") {
       alert("Por favor, forneça uma mensagem e uma avaliação antes de enviar.");
       return;
     }
+    // Chama a função recebida por props, enviando feedbackText e selectedStars
     onSubmitFeedback(feedbackText, selectedStars);
     handleCancel();
   };
@@ -57,20 +63,25 @@ export const FeedbackButton: React.FC<FeedbackButtonProps> = ({
               placeholder="Digite seu feedback aqui..."
               value={feedbackText}
               onChange={(e) => setFeedbackText(e.target.value)}
-              />
-              <StarRating>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <StarIcon
-                    key={star}
-                    filled={star <= (hoveredStars || selectedStars)}
-                    onClick={() => handleStarClick(star)}
-                    onMouseEnter={() => handleStarHover(star)}
-                    onMouseLeave={handleStarHoverOut}
-                  >
-                    <Star size={32} weight={star <= (hoveredStars || selectedStars) ? "fill" : "regular"} />
-                  </StarIcon>
-                ))}
-              </StarRating>
+            />
+            <StarRating>
+              {[1, 2, 3, 4, 5].map((star) => (
+                <StarIcon
+                  key={star}
+                  filled={star <= (hoveredStars || selectedStars)}
+                  onClick={() => handleStarClick(star)}
+                  onMouseEnter={() => handleStarHover(star)}
+                  onMouseLeave={handleStarHoverOut}
+                >
+                  <Star
+                    size={32}
+                    weight={
+                      star <= (hoveredStars || selectedStars) ? "fill" : "regular"
+                    }
+                  />
+                </StarIcon>
+              ))}
+            </StarRating>
             <FeedbackActions>
               <SendButton onClick={handleSubmit}>Enviar</SendButton>
               <CancelButton onClick={handleCancel}>Cancelar</CancelButton>
