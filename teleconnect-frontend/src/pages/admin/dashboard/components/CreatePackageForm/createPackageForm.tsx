@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { createPackage, CreatePackagePayload } from "./FetchCreatePackage"; // Atualize o caminho
+import toast from "react-hot-toast";
 
 export const CreatePackageForm = () => {
     const [selectedPlan, setSelectedPlan] = useState("");
@@ -35,14 +36,14 @@ export const CreatePackageForm = () => {
         try {
             const { data, response } = await createPackage(formData);
             if (response.ok) {
-                alert("Pacote criado com sucesso!");
+                toast.success(data.message || "Pacote criado com sucesso.");
                 setFormData({
                     is_b2b: true,
                     price: 0,
                 });
                 setSelectedPlan("");
             } else {
-                alert(data.message || "Erro ao criar pacote.");
+                toast.error(data.message || "Erro ao criar o pacote.");
             }
         } catch (error) {
             console.error("Erro na criação do pacote:", error);
