@@ -8,7 +8,6 @@ export const ProdutosEmpresa = () => {
     return (
         <>
             <Container>
-                <ImageBanner src="/produtos.png" alt="Ofertas especiais" />
                 <Title>Os melhores planos separados para sua empresa</Title>
                 <Description>
                     Escolha o plano que mais combina com os valores da sua empresa e leve junto com ele diversos benefícios.

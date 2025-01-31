@@ -8,7 +8,6 @@ export const ProdutosPessoa = () => {
     return (
         <>
             <Container>
-                <ImageBanner src="/produtos.png" alt="Ofertas especiais" />
                 <Title>Os melhores planos separados para você</Title>
                 <Description>
                     Escolha o plano que mais combina com você e leve junto com ele diversos benefícios.
