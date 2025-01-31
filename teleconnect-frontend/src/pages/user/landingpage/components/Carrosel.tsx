@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import styled from "styled-components";
 
 export const Carousel = () => {
-  const images = ["/propaganda1.png", "/produtos.png", "/fotoCliente.png"];
+  const images = ["/propaganda1.png", "/carrossel.png", "/carrossel2.png"];
   const [currentindex, setcurrentindex] = useState(0);
 
   // Função para avançar automaticamente o slide
