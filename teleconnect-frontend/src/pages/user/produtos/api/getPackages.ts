@@ -6,7 +6,7 @@ export interface Package {
     mobile_service_amount?: number;
     fiber?: "Básico" | "Intermediário" | "Família";
     fiber_amount?: number;
-    streaming_partnership?: "GloboPlay" | "Premiere";
+    streaming_partnership?: "GloboPlay" | "HBO Max";
     fixed_phone?: boolean;
     price: number;
     is_b2b: boolean;
