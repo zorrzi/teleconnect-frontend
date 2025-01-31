@@ -16,10 +16,17 @@ export const Footer = () => {
                 {/* Links na parte superior */}
                 <NavLinks>
                     <Link to="/">Home</Link>
-                    <Link to="/contato">Fale Conosco</Link>
+                    <a
+                    href="https://wa.me/5511940491919"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    >
+                    SAC
+                    </a>
                     <Link to="/sobre">Sobre Nós</Link>
-                    <Link to="/empresa">Para empresa</Link>
-                    <Link to="/pessoa">Para você</Link>
+                    <Link to="/user/produtos/empresa">Para empresa</Link>
+                    <Link to="/user/produtos/pessoa">Para você</Link>
+                    <Link to="/admin/login">Funcionarios</Link>
                 </NavLinks>
 
                 {/* Redes Sociais + Logo */}
