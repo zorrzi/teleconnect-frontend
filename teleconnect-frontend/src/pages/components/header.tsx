@@ -98,7 +98,13 @@ export const Header = () => {
             <DropdownContent>
               <Link to="/">Início</Link>
               <Link to="/sobre">Sobre Nós</Link>
-              <Link to="/contato">Contato</Link>
+              <a
+                href="https://wa.me/5511940491919"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                SAC
+              </a>
             </DropdownContent>
           </Dropdown>
           <Dropdown>
