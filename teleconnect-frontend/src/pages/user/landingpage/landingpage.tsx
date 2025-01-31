@@ -1,5 +1,5 @@
 import { Carousel } from "./components/Carrosel";
-import { Offers } from "./components/Offers";
+import { SpecialOffers } from "./components/servicos/Offers";
 import { Features } from "./components/Features";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
@@ -11,7 +11,7 @@ export const LandingPage = () => {
         <>
             <Header />
             <Carousel />
-            <Offers />
+            <SpecialOffers />
             <Features />
             <Services />
             <Footer />

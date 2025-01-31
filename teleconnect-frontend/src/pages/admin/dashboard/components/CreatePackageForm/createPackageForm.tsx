@@ -141,7 +141,7 @@ export const CreatePackageForm = () => {
                             <Select id="streaming_partnership" onChange={handleInputChange}>
                                 <option value="">Selecione</option>
                                 <option value="GloboPlay">GloboPlay</option>
-                                <option value="Premiere">Premiere</option>
+                                <option value="HBO Max">HBO Max</option>
                             </Select>
                         </FormGroup>
                     </>
