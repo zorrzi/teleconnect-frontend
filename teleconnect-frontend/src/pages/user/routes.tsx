@@ -16,6 +16,7 @@ import { TelefoneFixoEmpresa } from "./produtos/empresa/nested/telefone_fixo/Tel
 import { PaymentPage } from "./payment/PaymentPage.tsx";
 import { PaymentConfirmation } from "./paymentDone/PaymentConfirmation.tsx";
 import { MyPlansPage } from "./myPlans/myPlans.tsx";
+import { SobreNos } from './aboutUs/aboutUs.tsx';
 
 const routes: RouteObject[] = [
     {
@@ -77,7 +78,12 @@ const routes: RouteObject[] = [
         path: "user/meus-planos",
         element: <MyPlansPage />,
         id: "meus-planos",
-      }
+      },
+    {
+        path: "sobre",
+        element: <SobreNos />,
+        id: "sobre-nos",
+    },
 ];
 
 export default routes;
