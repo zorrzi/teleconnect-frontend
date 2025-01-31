@@ -1,3 +1,4 @@
+// src/components/footer.tsx
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { FaFacebookF, FaWhatsapp, FaInstagram, FaTimes } from "react-icons/fa";
@@ -5,6 +6,7 @@ import { FeedbackButton } from "./FeedbackButton/feedbackbutton";
 import { submitFeedback } from "./FeedbackButton/FetchCreateFeedback";
 
 export const Footer = () => {
+  // Recebe do feedbackButton
   const handleFeedbackSubmit = async (feedbackText: string, stars: number) => {
     try {
       const response = await submitFeedback(feedbackText, stars);
@@ -69,7 +71,6 @@ export const Footer = () => {
 };
 
 /* ======= Estilos ======= */
-
 const FooterContainer = styled.footer`
   display: flex;
   justify-content: space-between;
@@ -84,7 +85,6 @@ const FooterContainer = styled.footer`
   }
 `;
 
-/* Seção Esquerda: Texto e Imagem */
 const LeftSection = styled.div`
   display: flex;
   flex-direction: row;
@@ -118,7 +118,6 @@ const LeftSection = styled.div`
   }
 `;
 
-/* Seção Direita: Links + Redes Sociais */
 const RightSection = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,7 +134,6 @@ const RightSection = styled.div`
   }
 `;
 
-/* Links de Navegação */
 const NavLinks = styled.div`
   display: flex;
   flex-direction: column;
@@ -162,7 +160,6 @@ const NavLinks = styled.div`
   }
 `;
 
-/* Redes Sociais + Logo */
 const BottomSection = styled.div`
   display: flex;
   justify-content: space-between;
@@ -177,7 +174,6 @@ const BottomSection = styled.div`
   }
 `;
 
-/* Redes Sociais */
 const SocialIcons = styled.div`
   display: flex;
   gap: 1rem;
@@ -193,7 +189,6 @@ const SocialIcons = styled.div`
   }
 `;
 
-/* Logo */
 const Logo = styled.div`
   img {
     width: 120px;
@@ -201,7 +196,6 @@ const Logo = styled.div`
   }
 `;
 
-/* Botão de Feedback */
 const FeedbackSection = styled.div`
   margin-top: 2rem;
   text-align: center;
