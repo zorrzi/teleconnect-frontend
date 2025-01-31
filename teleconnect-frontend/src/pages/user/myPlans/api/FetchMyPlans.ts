@@ -1,19 +1,28 @@
-// import { config } from "../../../../config/config";
+// src/pages/user/meusplanos/api/MeusPlanos.ts
+import { config } from "../../../../config/config";
 
-// export const fetchUserPlans = async () => {
-//   try {
-//     const response = await fetch(`${config.apiBaseUrl}/user/plans`, {
-//       method: "GET",
-//       credentials: "include", // Garante envio de cookies
-//     });
+/**
+ * Faz a requisição ao backend para listar os pacotes do usuário logado.
+ * É necessário que o usuário já esteja autenticado e possua o token nos cookies.
+ */
+export async function getUserPackages() {
+  try {
+    const response = await fetch(`${config.apiBaseUrl}/user/my-packages`, {
+      method: "GET",
+      credentials: "include", // 🔥 Envia cookies para autenticação
+    });
 
-//     if (!response.ok) {
-//       throw new Error("Erro ao carregar planos");
-//     }
+    const data = await response.json();
 
-//     return await response.json();
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
+    if (!response.ok || data.status !== "success") {
+      // Backend pode retornar algo como { status: "error", message: "..." }
+      throw new Error(data.message || "Erro ao buscar pacotes.");
+    }
+
+    // Retornamos o array de pacotes
+    return data.data || [];
+  } catch (error) {
+    console.error("Erro ao buscar pacotes do usuário:", error);
+    throw error; // você pode tratar esse erro na página
+  }
+}

@@ -15,7 +15,7 @@ import { InternetFibraEmpresa } from "./produtos/empresa/nested/internet_fibra/I
 import { TelefoneFixoEmpresa } from "./produtos/empresa/nested/telefone_fixo/TelefoneFixoEmpresa.tsx";
 import { PaymentPage } from "./payment/PaymentPage.tsx";
 import { PaymentConfirmation } from "./paymentDone/PaymentConfirmation.tsx";
-import { MeusPlanos } from "./meusplanos/MeusPlanos";
+import { MyPlansPage } from "./myPlans/myPlans.tsx";
 
 const routes: RouteObject[] = [
     {
@@ -74,8 +74,8 @@ const routes: RouteObject[] = [
         id: "pagamento-confirmado",
     },
     {
-        path: "user/meusplanos",
-        element: <MeusPlanos />,
+        path: "user/meus-planos",
+        element: <MyPlansPage />,
         id: "meus-planos",
       }
 ];
