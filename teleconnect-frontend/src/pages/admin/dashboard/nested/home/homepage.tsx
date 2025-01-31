@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import toast from "react-hot-toast";
 import { fetchActivePackages } from "./api/FetchActivePackages";
+import { listAllFeedbacks } from "./api/feedbacks";
 
 interface ActivePackage {
   id: string;
@@ -10,6 +11,12 @@ interface ActivePackage {
   mobile_service?: string;
   mobile_service_amount?: number;
   fixed_phone?: boolean;
+}
+
+interface Feedback {
+  _id: string;
+  feedback_text: string;
+  stars: number;
 }
 
 export const Home = () => {
@@ -26,6 +33,8 @@ export const Home = () => {
     prepaid: 0,
     postpaid: 0,
   });
+
+  const [feedbacks, setFeedbacks] = useState<Feedback[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,7 +70,18 @@ export const Home = () => {
       }
     };
 
+    const fetchFeedbacks = async () => {
+      try {
+        const feedbackData = await listAllFeedbacks();
+        setFeedbacks(feedbackData);
+      } catch (error) {
+        console.error("Erro ao buscar feedbacks:", error);
+        toast.error("Erro ao buscar feedbacks.");
+      }
+    };
+
     fetchData();
+    fetchFeedbacks();
   }, []);
 
   return (
@@ -89,7 +109,7 @@ export const Home = () => {
           </Card>
 
           <Card>
-            <h3>Pacotes de Telfone Móvel</h3>
+            <h3>Pacotes de Telefone Móvel</h3>
             <p>{mobilePackages}</p>
             <Details>
               <p>Pré-pago: {mobileDetails.prepaid}</p>
@@ -102,7 +122,16 @@ export const Home = () => {
       <RightSection>
         <FeedbackBox>
           <h3>Feedbacks dos Clientes</h3>
-          <p>Aqui serão listados os feedbacks dos clientes.</p>
+          {feedbacks.length === 0 ? (
+            <p>Nenhum feedback disponível no momento.</p>
+          ) : (
+            feedbacks.slice(0, 3).map((feedback) => (
+              <FeedbackCard key={feedback._id}>
+                <Stars>{"⭐".repeat(feedback.stars)}</Stars>
+                <p>{feedback.feedback_text}</p>
+              </FeedbackCard>
+            ))
+          )}
         </FeedbackBox>
       </RightSection>
     </Container>
@@ -178,9 +207,18 @@ const FeedbackBox = styled.div`
     font-size: 1.5rem;
     color: #333;
   }
+`;
 
-  p {
-    font-size: 1rem;
-    color: #666;
-  }
+const FeedbackCard = styled.div`
+  background: #f9f9f9;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+`;
+
+const Stars = styled.div`
+  font-size: 1.2rem;
+  color: #ffa14a;
+  margin-bottom: 5px;
 `;
