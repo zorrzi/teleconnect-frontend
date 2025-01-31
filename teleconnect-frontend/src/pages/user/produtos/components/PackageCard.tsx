@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { Package } from "../api/getPackages";
 import { CheckCircle } from "phosphor-react";
 import { useNavigate } from "react-router-dom";
+import { ValidateSession } from "../api/FetchValidateSession";
 
 interface PackageCardProps {
     pack: Package;
@@ -10,9 +11,15 @@ interface PackageCardProps {
 export const PackageCard = ({ pack }: PackageCardProps) => {
     const navigate = useNavigate();
 
-    const handleSubscribe = () => {
-        navigate("/pagamento", { state: { packageData: pack } });
-    }
+    const handleSubscribe = async () => {
+        const isValidSession = await ValidateSession();
+        if (isValidSession) {
+            navigate("/pagamento", { state: { packageData: pack } });
+        } else {
+            navigate("/user/login"); // Redireciona para a página de login
+        }
+    };
+
     return (
         <Card>
             <TopSection>
@@ -30,7 +37,6 @@ export const PackageCard = ({ pack }: PackageCardProps) => {
                     {pack.mobile_service_amount && <Feature><CheckCircle size={20} /> {pack.mobile_service_amount} GB de celular</Feature>}
                     {pack.fixed_phone && <Feature><CheckCircle size={20} /> Telefone Fixo Incluso</Feature>}
                 </Features>
-
             </Content>
             <LowerSection>
                 <SubscribeButton onClick={handleSubscribe}>Assine Já</SubscribeButton>
@@ -46,11 +52,11 @@ const Card = styled.div`
     flex-direction: column;
     justify-content: space-between;
     width: 280px;
-    height: 380px; /* 🔹 Aumentada a altura */
+    height: 380px;
     background: white;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15); /* 🔹 Intensificado */
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease-in-out;
 
     &:hover {
@@ -58,7 +64,6 @@ const Card = styled.div`
     }
 `;
 
-/* 🔹 Imagem no topo do card */
 const TopSection = styled.div`
     position: relative;
     width: 100%;
@@ -74,36 +79,31 @@ const TriangleImage = styled.img`
     height: auto;
 `;
 
-/* 🔹 Conteúdo do card */
 const Content = styled.div`
     padding: 2rem;
     text-align: center;
 `;
 
-/* 🔹 Título do pacote */
 const Title = styled.h3`
-    font-size: 1.8rem; /* 🔹 Aumentado */
+    font-size: 1.8rem;
     font-weight: bold;
     color: #003B5C;
     margin-bottom: 10px;
 `;
 
-/* 🔹 Preço */
 const Price = styled.p`
-    font-size: 2.5rem; /* 🔹 Aumentado bastante */
+    font-size: 2.5rem;
     font-weight: bold;
     color: #003B5C;
     margin-bottom: 5px;
 `;
 
-/* 🔹 Subtítulo */
 const Subtitle = styled.p`
     font-size: 1rem;
     color: #666;
     margin-bottom: 15px;
 `;
 
-/* 🔹 Parceria de Streaming */
 const Feature = styled.p`
     font-size: 1rem;
     font-weight: bold;
@@ -115,7 +115,6 @@ const Feature = styled.p`
     gap: 6px;
 `;
 
-/* 🔹 Lista de Features */
 const Features = styled.div`
     display: flex;
     flex-direction: column;
@@ -124,7 +123,6 @@ const Features = styled.div`
     margin-bottom: 1rem;
 `;
 
-/* 🔹 Botão */
 const SubscribeButton = styled.button`
     width: 100%;
     padding: 12px;
